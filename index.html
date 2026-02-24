@@ -19,6 +19,7 @@
     --green: #33ff33;
     --green-dim: #1a8a1a;
     --green-glow: #33ff3344;
+    --green-bright: #66ff66;
     --scanline: rgba(0,0,0,0.15);
     --border: #1a661a;
     --font: 'Share Tech Mono', 'SF Mono', 'Menlo', 'Courier New', monospace;
@@ -32,6 +33,51 @@
     font-family: var(--font);
     min-height: 100vh;
     overflow-x: hidden;
+  }
+
+  /* ── CRT Power-on animation ── */
+  .crt-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg);
+    z-index: 2000;
+    animation: crt-poweron 1.2s ease-out forwards;
+    pointer-events: none;
+  }
+  .crt-overlay::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 2px;
+    background: var(--green);
+    box-shadow: 0 0 15px var(--green), 0 0 30px var(--green), 0 0 60px var(--green);
+    transform: translateY(-50%);
+    animation: crt-line 0.4s ease-out 0.1s forwards;
+  }
+  @keyframes crt-line {
+    0% { opacity: 1; height: 2px; top: 50%; }
+    40% { opacity: 1; height: 2px; top: 50%; }
+    100% { opacity: 0; height: 100vh; top: 0; }
+  }
+  @keyframes crt-poweron {
+    0% { opacity: 1; }
+    60% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Content fades in after power-on */
+  .terminal {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 32px 20px 16px 20px;
+    position: relative;
+    opacity: 0;
+    animation: content-in 0.6s ease-out 0.8s forwards;
+  }
+  @keyframes content-in {
+    0% { opacity: 0; filter: brightness(2); }
+    50% { opacity: 1; filter: brightness(1.3); }
+    100% { opacity: 1; filter: brightness(1); }
   }
 
   /* CRT scanline overlay */
@@ -50,7 +96,7 @@
     z-index: 1000;
   }
 
-  /* Subtle screen curvature vignette */
+  /* Screen curvature vignette */
   body::before {
     content: '';
     position: fixed;
@@ -60,17 +106,25 @@
     z-index: 999;
   }
 
+  /* Subtle screen flicker */
+  @keyframes flicker {
+    0% { opacity: 1; }
+    92% { opacity: 1; }
+    93% { opacity: 0.92; }
+    94% { opacity: 1; }
+    96% { opacity: 0.95; }
+    97% { opacity: 1; }
+    100% { opacity: 1; }
+  }
   .terminal {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 32px 20px;
-    position: relative;
+    animation: content-in 0.6s ease-out 0.8s forwards,
+               flicker 4s infinite 2s;
   }
 
-  /* Profile section */
+  /* ── Profile section ── */
   .profile {
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
   .avatar {
@@ -87,7 +141,7 @@
     font-size: 1.1rem;
     font-weight: normal;
     letter-spacing: 0.3em;
-    text-shadow: 0 0 10px var(--green-glow), 0 0 20px var(--green-glow);
+    text-shadow: 0 0 8px var(--green-glow), 0 0 16px var(--green-glow), 0 0 32px rgba(51,255,51,0.15);
     margin-bottom: 4px;
   }
 
@@ -95,22 +149,43 @@
     color: var(--green-dim);
     font-size: 0.75rem;
     letter-spacing: 0.15em;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .profile .bio {
     color: var(--green-dim);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    line-height: 1.5;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    line-height: 1.7;
+    max-width: 380px;
+    margin: 0 auto;
   }
 
-  /* Social icons row */
+  .bio-line {
+    display: block;
+  }
+
+  .bio-accent {
+    color: var(--green);
+    text-shadow: 0 0 6px var(--green-glow);
+  }
+
+  .cursor-blink {
+    animation: blink 1s step-end infinite;
+    color: var(--green);
+    text-shadow: 0 0 6px var(--green-glow);
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* ── Social icons row ── */
   .socials {
     display: flex;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 28px;
+    gap: 12px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
   }
 
@@ -127,23 +202,24 @@
   .social-link:hover {
     color: var(--green);
     border-color: var(--green);
-    text-shadow: 0 0 8px var(--green-glow);
-    background: rgba(51, 255, 51, 0.04);
+    text-shadow: 0 0 8px var(--green-glow), 0 0 16px var(--green-glow);
+    box-shadow: 0 0 8px var(--green-glow);
+    background: rgba(51, 255, 51, 0.06);
   }
 
-  /* Divider */
+  /* ── Divider ── */
   .divider {
     border: none;
     border-top: 1px solid var(--border);
     margin: 0 0 24px 0;
   }
 
-  /* Link buttons */
+  /* ── Link buttons ── */
   .links {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
   .link {
@@ -158,8 +234,9 @@
 
   .link:hover {
     border-color: var(--green);
-    background: rgba(51, 255, 51, 0.04);
+    background: rgba(51, 255, 51, 0.06);
     text-shadow: 0 0 8px var(--green-glow);
+    box-shadow: 0 0 8px var(--green-glow);
   }
 
   .link:hover .link-title {
@@ -200,36 +277,65 @@
     transition: opacity 0.15s ease;
   }
 
-  /* Footer */
+  /* ── Status bar ── */
+  .status-bar {
+    border-top: 1px solid var(--border);
+    padding: 8px 0;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    font-size: 0.55rem;
+    color: var(--green-dim);
+    letter-spacing: 0.08em;
+    flex-wrap: wrap;
+  }
+
+  .status-item {
+    white-space: nowrap;
+  }
+
+  .status-item::before {
+    content: '█';
+    font-size: 0.45rem;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  .status-ok::before {
+    color: var(--green);
+    text-shadow: 0 0 4px var(--green-glow);
+  }
+
+  .status-sep {
+    color: var(--border);
+  }
+
+  /* ── Footer ── */
   .footer {
     text-align: center;
-    padding: 16px 0;
-    font-size: 0.6rem;
+    padding: 8px 0 16px 0;
+    font-size: 0.55rem;
     color: var(--green-dim);
     letter-spacing: 0.1em;
-    line-height: 1.8;
   }
 
-  .cursor-blink {
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  /* Mobile adjustments */
+  /* ── Mobile adjustments ── */
   @media (max-width: 480px) {
-    .terminal { padding: 24px 12px; }
+    .terminal { padding: 24px 12px 12px 12px; }
     .profile h1 { font-size: 0.9rem; letter-spacing: 0.2em; }
     .link-title { font-size: 0.78rem; }
     .link-row { flex-direction: column; gap: 2px; }
     .link-tag { text-align: left; }
     .prompt { display: none; }
+    .status-bar { gap: 4px; font-size: 0.5rem; }
+    .profile .bio { font-size: 0.62rem; }
   }
 </style>
 </head>
 <body>
+
+<!-- CRT power-on flash -->
+<div class="crt-overlay"></div>
 
 <div class="terminal">
 
@@ -237,7 +343,13 @@
     <img class="avatar" src="https://fractaldoctor.github.io/AppShowcase/image.png" alt="Dr Stuart Woolley">
     <h1>DR STUART WOOLLEY</h1>
     <div class="handle">@FRACTALDOCTOR</div>
-    <div class="bio">Drinks coffee, writes on Medium, worries a lot.</div>
+    <div class="bio">
+      <span class="bio-line">Meritocratic software type; <span class="bio-accent">(e/acc)</span></span>
+      <span class="bio-line">Singularitarian · Accelerationist</span>
+      <span class="bio-line">Writes far too much on Medium</span>
+      <span class="bio-line">Worries more than is optimal</span>
+      <span class="bio-line">Send 🧀 + 🍷<span class="cursor-blink">█</span></span>
+    </div>
   </div>
 
   <div class="socials">
@@ -295,10 +407,18 @@
     </a>
   </div>
 
+  <div class="status-bar">
+    <span class="status-item status-ok">SYS ONLINE</span>
+    <span class="status-sep">│</span>
+    <span class="status-item status-ok">CONN SECURE</span>
+    <span class="status-sep">│</span>
+    <span class="status-item status-ok">NODE: DUBLIN</span>
+    <span class="status-sep">│</span>
+    <span class="status-item status-ok">THREAT: NOMINAL</span>
+  </div>
+
   <div class="footer">
-    UPDATED: 2026-02-24 12:48 UTC<br>
-    <br>
-    <span class="cursor-blink">█</span>
+    UPDATED: 2026-02-24 13:07 UTC
   </div>
 
 </div>
