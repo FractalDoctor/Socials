@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr Stuart Woolley — Links</title>
+<meta name="description" content="Dr Stuart Woolley — writer, developer, composer. Links to articles, apps, books, and music.">
+<meta property="og:title" content="Dr Stuart Woolley — Links">
+<meta property="og:description" content="Writer, developer, composer. Links to articles, apps, books, and music.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://fractaldoctor.github.io/AppShowcase/image.png">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --green: #33ff33;
+    --green-dim: #1a8a1a;
+    --green-glow: #33ff3344;
+    --scanline: rgba(0,0,0,0.15);
+    --border: #1a661a;
+    --font: 'Share Tech Mono', 'SF Mono', 'Menlo', 'Courier New', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--green);
+    font-family: var(--font);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* CRT scanline overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      var(--scanline) 2px,
+      var(--scanline) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Subtle screen curvature vignette */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.6) 100%);
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .terminal {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 32px 20px;
+    position: relative;
+  }
+
+  /* Profile section */
+  .profile {
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 2px solid var(--green-dim);
+    box-shadow: 0 0 12px var(--green-glow), 0 0 24px var(--green-glow);
+    margin-bottom: 16px;
+    filter: grayscale(20%);
+  }
+
+  .profile h1 {
+    font-size: 1.1rem;
+    font-weight: normal;
+    letter-spacing: 0.3em;
+    text-shadow: 0 0 10px var(--green-glow), 0 0 20px var(--green-glow);
+    margin-bottom: 4px;
+  }
+
+  .profile .handle {
+    color: var(--green-dim);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    margin-bottom: 8px;
+  }
+
+  .profile .bio {
+    color: var(--green-dim);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+  }
+
+  /* Social icons row */
+  .socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .social-link {
+    color: var(--green-dim);
+    text-decoration: none;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    transition: all 0.15s ease;
+  }
+
+  .social-link:hover {
+    color: var(--green);
+    border-color: var(--green);
+    text-shadow: 0 0 8px var(--green-glow);
+    background: rgba(51, 255, 51, 0.04);
+  }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 0 24px 0;
+  }
+
+  /* Link buttons */
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+
+  .link {
+    display: block;
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--green);
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  .link:hover {
+    border-color: var(--green);
+    background: rgba(51, 255, 51, 0.04);
+    text-shadow: 0 0 8px var(--green-glow);
+  }
+
+  .link:hover .link-title {
+    text-shadow: 0 0 10px var(--green-glow), 0 0 20px var(--green-glow);
+  }
+
+  .link:hover .prompt {
+    opacity: 1;
+  }
+
+  .link-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  .link-title {
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+
+  .link-tag {
+    font-size: 0.6rem;
+    color: var(--green-dim);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .prompt {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--green);
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 16px 0;
+    font-size: 0.6rem;
+    color: var(--green-dim);
+    letter-spacing: 0.1em;
+    line-height: 1.8;
+  }
+
+  .cursor-blink {
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 480px) {
+    .terminal { padding: 24px 12px; }
+    .profile h1 { font-size: 0.9rem; letter-spacing: 0.2em; }
+    .link-title { font-size: 0.78rem; }
+    .link-row { flex-direction: column; gap: 2px; }
+    .link-tag { text-align: left; }
+    .prompt { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="terminal">
+
+  <div class="profile">
+    <img class="avatar" src="https://fractaldoctor.github.io/AppShowcase/image.png" alt="Dr Stuart Woolley">
+    <h1>DR STUART WOOLLEY</h1>
+    <div class="handle">@FRACTALDOCTOR</div>
+    <div class="bio">Drinks coffee, writes on Medium, worries a lot.</div>
+  </div>
+
+  <div class="socials">
+    <a class="social-link" href="https://x.com/fractaldoctor" target="_blank" rel="noopener">X</a>
+    <a class="social-link" href="https://www.youtube.com/channel/UCMdA9ZggNPn8Focgxg5JkOA" target="_blank" rel="noopener">YT</a>
+    <a class="social-link" href="https://www.linkedin.com/in/sjwoolley/" target="_blank" rel="noopener">IN</a>
+    <a class="social-link" href="https://www.pinterest.com/fractaldoctor/" target="_blank" rel="noopener">PIN</a>
+    <a class="social-link" href="https://tiktok.com/@fractaldoctor" target="_blank" rel="noopener">TT</a>
+  </div>
+
+  <hr class="divider">
+
+  <div class="links">
+    <a class="link" href="https://fractaldoctor.medium.com" target="_blank" rel="noopener">
+      <div class="link-row">
+        <span class="link-title">My Writing on Medium</span>
+        <span class="link-tag">ESSAYS & ARTICLES</span>
+      </div>
+      <span class="prompt">▸</span>
+    </a>
+    <a class="link" href="https://www.amazon.com/author/fractaldoctor" target="_blank" rel="noopener">
+      <div class="link-row">
+        <span class="link-title">Amazon Author Page</span>
+        <span class="link-tag">BOOKS</span>
+      </div>
+      <span class="prompt">▸</span>
+    </a>
+    <a class="link" href="https://fractaldoctor.github.io/AppShowcase/" target="_blank" rel="noopener">
+      <div class="link-row">
+        <span class="link-title">My iOS Apps</span>
+        <span class="link-tag">APP STORE</span>
+      </div>
+      <span class="prompt">▸</span>
+    </a>
+    <a class="link" href="http://www.fractaldoctor.com" target="_blank" rel="noopener">
+      <div class="link-row">
+        <span class="link-title">Website</span>
+        <span class="link-tag">HOMEPAGE</span>
+      </div>
+      <span class="prompt">▸</span>
+    </a>
+    <a class="link" href="https://music.apple.com/us/album/planetary/1161150208" target="_blank" rel="noopener">
+      <div class="link-row">
+        <span class="link-title">Argolian: Algorithmic Composition</span>
+        <span class="link-tag">APPLE MUSIC</span>
+      </div>
+      <span class="prompt">▸</span>
+    </a>
+    <a class="link" href="https://fractaldoctor.medium.com/subscribe" target="_blank" rel="noopener">
+      <div class="link-row">
+        <span class="link-title">Mailing List</span>
+        <span class="link-tag">SUBSCRIBE</span>
+      </div>
+      <span class="prompt">▸</span>
+    </a>
+  </div>
+
+  <div class="footer">
+    UPDATED: 2026-02-24 12:48 UTC<br>
+    <br>
+    <span class="cursor-blink">█</span>
+  </div>
+
+</div>
+
+</body>
+</html>
