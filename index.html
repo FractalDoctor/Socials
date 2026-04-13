@@ -271,6 +271,29 @@
     color: var(--border);
   }
 
+  /* ── Function key bar ── */
+  .fkeys {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 8px 0;
+    font-size: 0.7rem;
+    color: var(--green-dim);
+    letter-spacing: 0.06em;
+    flex-wrap: wrap;
+  }
+
+  .fkeys a {
+    color: var(--green-dim);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .fkeys a:hover {
+    color: var(--green);
+    text-shadow: 0 0 6px var(--green-glow);
+  }
+
   /* ── Footer ── */
   .footer {
     text-align: center;
@@ -289,6 +312,7 @@
     .link-tag { text-align: left; }
     .prompt { display: none; }
     .status-bar { gap: 4px; font-size: 0.62rem; }
+    .fkeys { gap: 8px; font-size: 0.6rem; }
     .profile .bio { font-size: 0.82rem; }
   }
 </style>
@@ -375,8 +399,14 @@
     <span class="status-item status-ok">THREAT: NOMINAL</span>
   </div>
 
+  <div class="fkeys">
+    <a href="https://fractaldoctor.medium.com" target="_blank" rel="noopener">F1=MEDIUM</a>
+    <a href="https://fractaldoctor.github.io/BookShowcase/" target="_blank" rel="noopener">F2=BOOKS</a>
+    <a href="https://fractaldoctor.github.io/AppShowcase/" target="_blank" rel="noopener">F3=APPS</a>
+  </div>
+
   <div class="footer">
-    UPDATED: 2026-04-13 13:36 UTC
+    UPDATED: 2026-04-13 13:46 UTC
   </div>
 
 </div>
