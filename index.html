@@ -3,398 +3,126 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dr Stuart Woolley — Links</title>
-<meta name="description" content="Dr Stuart Woolley — writer, developer, composer. Links to articles, apps, books, and music.">
-<meta property="og:title" content="Dr Stuart Woolley — Links">
-<meta property="og:description" content="Writer, developer, composer. Links to articles, apps, books, and music.">
+<title>Dr Stuart Woolley — FractalDoctor</title>
+<meta name="description" content="Dr Stuart Woolley — writer, developer, composer. Essays, apps, books and music.">
+<meta property="og:title" content="Dr Stuart Woolley — FractalDoctor">
+<meta property="og:description" content="Writer, developer, composer. Essays, apps, books and music.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://fractaldoctor.com/">
 <meta property="og:image" content="https://fractaldoctor.github.io/AppShowcase/image.png">
 <meta name="twitter:card" content="summary">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0a0a;
-    --green: #33ff33;
-    --green-dim: #2aaa2a;
-    --green-glow: #33ff3344;
-    --green-bright: #66ff66;
-    --scanline: rgba(0,0,0,0.15);
-    --border: #1a661a;
-    --font: 'Share Tech Mono', 'SF Mono', 'Menlo', 'Courier New', monospace;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--green);
-    font-family: var(--font);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  .terminal {
-    max-width: 520px;
-    margin: 0 auto;
-    padding: 32px 20px 16px 20px;
-    position: relative;
-  }
-
-  /* CRT scanline overlay */
-  body::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      var(--scanline) 2px,
-      var(--scanline) 4px
-    );
-    pointer-events: none;
-    z-index: 1000;
-  }
-
-  /* Screen curvature vignette */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.6) 100%);
-    pointer-events: none;
-    z-index: 999;
-  }
-
-  /* Subtle screen flicker */
-  @keyframes flicker {
-    0% { opacity: 1; }
-    92% { opacity: 1; }
-    93% { opacity: 0.92; }
-    94% { opacity: 1; }
-    96% { opacity: 0.95; }
-    97% { opacity: 1; }
-    100% { opacity: 1; }
-  }
-  .terminal {
-    animation: flicker 4s infinite;
-  }
-
-  /* ── Profile section ── */
-  .profile {
-    text-align: center;
-    margin-bottom: 24px;
-  }
-
-  .avatar {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-    border: 2px solid var(--green-dim);
-    box-shadow: 0 0 12px var(--green-glow), 0 0 24px var(--green-glow);
-    margin-bottom: 16px;
-    filter: grayscale(20%);
-  }
-
-  .profile h1 {
-    font-size: 1.4rem;
-    font-weight: normal;
-    letter-spacing: 0.3em;
-    text-shadow: 0 0 8px var(--green-glow), 0 0 16px var(--green-glow), 0 0 32px rgba(51,255,51,0.15);
-    margin-bottom: 6px;
-  }
-
-  .profile .handle {
-    color: var(--green-dim);
-    font-size: 0.85rem;
-    letter-spacing: 0.15em;
-    margin-bottom: 12px;
-  }
-
-  .profile .bio {
-    color: var(--green-dim);
-    font-size: 0.9rem;
-    letter-spacing: 0.06em;
-    line-height: 1.7;
-    max-width: 380px;
-    margin: 0 auto;
-  }
-
-  .bio-line {
-    display: block;
-  }
-
-  .bio-accent {
-    color: var(--green);
-    text-shadow: 0 0 6px var(--green-glow);
-  }
-
-  .cursor-blink {
-    animation: blink 1s step-end infinite;
-    color: var(--green);
-    text-shadow: 0 0 6px var(--green-glow);
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  /* ── Social icons row ── */
-  .socials {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-
-  .social-link {
-    color: var(--green-dim);
-    text-decoration: none;
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    padding: 6px 12px;
-    border: 1px solid var(--border);
-    transition: all 0.15s ease;
-  }
-
-  .social-link:hover {
-    color: var(--green);
-    border-color: var(--green);
-    text-shadow: 0 0 8px var(--green-glow), 0 0 16px var(--green-glow);
-    box-shadow: 0 0 8px var(--green-glow);
-    background: rgba(51, 255, 51, 0.06);
-  }
-
-  /* ── Divider ── */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 0 0 24px 0;
-  }
-
-  /* ── Link buttons ── */
-  .links {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 24px;
-  }
-
-  .link {
-    display: block;
-    border: 1px solid var(--border);
-    padding: 14px 16px;
-    text-decoration: none;
-    color: var(--green);
-    transition: all 0.15s ease;
-    position: relative;
-  }
-
-  .link:hover {
-    border-color: var(--green);
-    background: rgba(51, 255, 51, 0.06);
-    text-shadow: 0 0 8px var(--green-glow);
-    box-shadow: 0 0 8px var(--green-glow);
-  }
-
-  .link:hover .link-title {
-    text-shadow: 0 0 10px var(--green-glow), 0 0 20px var(--green-glow);
-  }
-
-  .link:hover .prompt {
-    opacity: 1;
-  }
-
-  .link-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px;
-  }
-
-  .link-title {
-    font-size: 0.95rem;
-    letter-spacing: 0.08em;
-  }
-
-  .link-tag {
-    font-size: 0.7rem;
-    color: var(--green-dim);
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-  }
-
-  .prompt {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--green);
-    font-size: 0.8rem;
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-
-  /* ── Status bar ── */
-  .status-bar {
-    border-top: 1px solid var(--border);
-    padding: 8px 0;
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    color: var(--green-dim);
-    letter-spacing: 0.08em;
-    flex-wrap: wrap;
-  }
-
-  .status-item {
-    white-space: nowrap;
-  }
-
-  .status-item::before {
-    content: '█';
-    font-size: 0.45rem;
-    margin-right: 4px;
-    vertical-align: middle;
-  }
-
-  .status-ok::before {
-    color: var(--green);
-    text-shadow: 0 0 4px var(--green-glow);
-  }
-
-  .status-sep {
-    color: var(--border);
-  }
-
-  /* ── Function key bar ── */
-  .fkeys {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    padding: 8px 0;
-    font-size: 0.7rem;
-    color: var(--green-dim);
-    letter-spacing: 0.06em;
-    flex-wrap: wrap;
-  }
-
-  .fkeys a {
-    color: var(--green-dim);
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
-
-  .fkeys a:hover {
-    color: var(--green);
-    text-shadow: 0 0 6px var(--green-glow);
-  }
-
-  /* ── Footer ── */
-  .footer {
-    text-align: center;
-    padding: 8px 0 16px 0;
-    font-size: 0.72rem;
-    color: var(--green-dim);
-    letter-spacing: 0.1em;
-  }
-
-  /* ── Mobile adjustments ── */
-  @media (max-width: 480px) {
-    .terminal { padding: 24px 12px 12px 12px; }
-    .profile h1 { font-size: 1.1rem; letter-spacing: 0.2em; }
-    .link-title { font-size: 0.85rem; }
-    .link-row { flex-direction: column; gap: 2px; }
-    .link-tag { text-align: left; }
-    .prompt { display: none; }
-    .status-bar { gap: 4px; font-size: 0.62rem; }
-    .fkeys { gap: 8px; font-size: 0.6rem; }
-    .profile .bio { font-size: 0.82rem; }
-  }
-</style>
+<link rel="canonical" href="https://fractaldoctor.com/">
+<link rel="stylesheet" href="https://fractaldoctor.com/css/mainframe.css?v=3ea3896f">
+<script src="https://fractaldoctor.com/js/console.js?v=3ea3896f" defer></script>
 </head>
 <body>
+<div class="screen">
 
-<div class="terminal">
+  <header class="masthead">
+    <span class="system">FDOC01</span>
+    <span class="title">FRACTALDOCTOR ── OPERATOR CONSOLE</span>
+    <span class="position">ROW 1 TO 5 OF 5</span>
+  </header>
 
-  <div class="profile">
-    <img class="avatar" src="https://fractaldoctor.github.io/AppShowcase/image.png" alt="Dr Stuart Woolley">
-    <h1>DR STUART WOOLLEY</h1>
-    <div class="handle">@FRACTALDOCTOR</div>
-    <div class="bio">
-      <span class="bio-line">Meritocratic software type; <span class="bio-accent">(e/acc)</span></span>
-      <span class="bio-line">Singularitarian · Accelerationist</span>
-      <span class="bio-line">Writes far too much on Medium</span>
-      <span class="bio-line">Worries more than is optimal</span>
-      <span class="bio-line">Send 🧀 + 🍷<span class="cursor-blink">█</span></span>
+  <form class="command" autocomplete="off">
+    <label for="cmd">COMMAND ===&gt;</label>
+    <input id="cmd" name="cmd" spellcheck="false" aria-label="Command">
+    <span class="scroll">SCROLL ===&gt; PAGE</span>
+  </form>
+  <p class="message">ENTER HELP FOR COMMANDS, OR SELECT A JOB</p>
+
+  <main class="console">
+
+    <div>
+      <section class="panel operator">
+        <h2><span>OPERATOR</span><span class="ref">ID</span></h2>
+        <h1 class="name">DR STUART WOOLLEY</h1>
+        <p class="handle">@FRACTALDOCTOR</p>
+        <p class="bio">
+          <span>Meritocratic software type; <em>(e/acc)</em></span>
+          <span>Singularitarian · Accelerationist</span>
+          <span>Writes far too much on Medium</span>
+          <span>Worries more than is optimal</span>
+          <span>Send 🧀 + 🍷</span>
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2><span>SYSTEM STATUS</span><span class="ref">D A,L</span></h2>
+        <dl class="stats">
+          <dt>APPS ON STORE</dt><dd>49</dd>
+          <dt>BOOKS IN PRINT</dt><dd>6</dd>
+          <dt>LAST ESSAY</dt><dd>26.308</dd>
+          <dt>LAST APP UPDATE</dt><dd>26.303</dd>
+          <dt>NODE</dt><dd>DUBLIN</dd>
+          <dt>IPL</dt><dd>68.105</dd>
+          <dt>THREAT LEVEL</dt><dd class="ok">NOMINAL</dd>
+        </dl>
+      </section>
     </div>
-  </div>
 
-  <hr class="divider">
+    <section class="panel">
+      <h2><span>JOB QUEUE</span><span class="ref">SDSF ST</span></h2>
+      <ol class="queue">
+        <li class="head" aria-hidden="true"><span class="job">JOBNAME</span><span class="class">CL</span><span class="status">STATUS</span><span class="desc">DESCRIPTION</span></li>
+          <li><a href="https://fractaldoctor.medium.com" target="_blank" rel="noopener" data-cmd="MEDIUM"><span class="job">MEDIUM</span><span class="class">A</span><span class="status">ACTIVE</span><span class="desc">Essays on the Grand Game of Software Engineering</span></a></li>
+          <li><a href="https://fractaldoctor.github.io/BookShowcase/" data-cmd="BOOKS"><span class="job">BOOKS</span><span class="class">A</span><span class="status">6 TITLES</span><span class="desc">Published books on Kindle</span></a></li>
+          <li><a href="https://fractaldoctor.github.io/AppShowcase/" data-cmd="APPS"><span class="job">APPS</span><span class="class">A</span><span class="status">49 LIVE</span><span class="desc">iOS and macOS apps on the App Store</span></a></li>
+          <li><a href="https://music.apple.com/us/album/planetary/1161150208" target="_blank" rel="noopener" data-cmd="ARGOLIAN MUSIC"><span class="job">ARGOLIAN</span><span class="class">B</span><span class="status">OUTPUT</span><span class="desc">Algorithmic composition on Apple Music</span></a></li>
+          <li><a href="https://fractaldoctor.medium.com/subscribe" target="_blank" rel="noopener" data-cmd="MAILLIST SUBSCRIBE"><span class="job">MAILLIST</span><span class="class">B</span><span class="status hold">AWAITING</span><span class="desc">Subscribe for new essays by mail</span></a></li>
+      </ol>
 
-  <div class="links">
-    <a class="link" href="https://fractaldoctor.medium.com" target="_blank" rel="noopener">
-      <div class="link-row">
-        <span class="link-title">My Writing on Medium</span>
-        <span class="link-tag">ESSAYS & ARTICLES</span>
-      </div>
-      <span class="prompt">▸</span>
-    </a>
-    <a class="link" href="https://fractaldoctor.github.io/BookShowcase/" target="_blank" rel="noopener">
-      <div class="link-row">
-        <span class="link-title">Published Books</span>
-        <span class="link-tag">KINDLE</span>
-      </div>
-      <span class="prompt">▸</span>
-    </a>
-    <a class="link" href="https://fractaldoctor.github.io/AppShowcase/" target="_blank" rel="noopener">
-      <div class="link-row">
-        <span class="link-title">My iOS Apps</span>
-        <span class="link-tag">APP STORE</span>
-      </div>
-      <span class="prompt">▸</span>
-    </a>
-    <a class="link" href="https://music.apple.com/us/album/planetary/1161150208" target="_blank" rel="noopener">
-      <div class="link-row">
-        <span class="link-title">Argolian: Algorithmic Composition</span>
-        <span class="link-tag">APPLE MUSIC</span>
-      </div>
-      <span class="prompt">▸</span>
-    </a>
-    <a class="link" href="https://fractaldoctor.medium.com/subscribe" target="_blank" rel="noopener">
-      <div class="link-row">
-        <span class="link-title">Mailing List</span>
-        <span class="link-tag">SUBSCRIBE</span>
-      </div>
-      <span class="prompt">▸</span>
-    </a>
-  </div>
+      <div class="listings">
+        <section class="panel wide">
+          <h2><span>SPOOL ── RECENT ESSAYS</span><span class="ref">MEDIUM</span></h2>
+          <ul class="listing">
+            <li><a href="https://medium.com/the-grand-game-of-software-engineering/airbrushed-from-the-about-us-page-8d207fe11a27" target="_blank" rel="noopener"><span class="when">2026-11-04</span><span class="what">Airbrushed From The About Us Page</span><span class="tag">GRAND GAME</span></a></li>
+            <li><a href="https://medium.com/the-grand-game-of-software-engineering/nobody-else-decides-what-you-work-on-now-5101ca31bcd4" target="_blank" rel="noopener"><span class="when">2026-10-30</span><span class="what">Nobody Else Decides What You Work On Now</span><span class="tag">GRAND GAME</span></a></li>
+            <li><a href="https://medium.com/the-grand-game-of-software-engineering/thirty-years-dodging-management-but-then-the-agents-arrived-65054dc346c3" target="_blank" rel="noopener"><span class="when">2026-10-24</span><span class="what">Thirty Years Dodging Management But Then The Agents Arrived</span><span class="tag">GRAND GAME</span></a></li>
+            <li><a href="https://medium.com/the-grand-game-of-software-engineering/they-hired-a-time-lord-then-handed-them-a-mop-b306cdf4c321" target="_blank" rel="noopener"><span class="when">2026-10-19</span><span class="what">They hired a Time Lord, then handed them a mop</span><span class="tag">GRAND GAME</span></a></li>
+            <li><a href="https://medium.com/the-grand-game-of-software-engineering/the-effective-hourly-rate-of-doing-nothing-d1926c1bd391" target="_blank" rel="noopener"><span class="when">2026-10-11</span><span class="what">The Effective Hourly Rate Of Doing Nothing</span><span class="tag">GRAND GAME</span></a></li>
+          </ul>
+        </section>
+        <section class="panel">
+          <h2><span>SYSLOG ── APP UPDATES</span><span class="ref">ASC</span></h2>
+          <ul class="listing">
+            <li><a href="https://fractaldoctor.github.io/AppShowcase/irish-real-time-rail/" target="_blank" rel="noopener"><span class="when">2026-10-30</span><span class="what">Irish Real Time Rail</span><span class="tag">TRAVEL</span></a></li>
+            <li><a href="https://fractaldoctor.github.io/AppShowcase/phosphortex/" target="_blank" rel="noopener"><span class="when">2026-10-24</span><span class="what">PhosphorTEX</span><span class="tag">UTILITIES</span></a></li>
+            <li><a href="https://fractaldoctor.github.io/AppShowcase/phosphorrtty/" target="_blank" rel="noopener"><span class="when">2026-10-24</span><span class="what">PhosphorRTTY</span><span class="tag">UTILITIES</span></a></li>
+            <li><a href="https://fractaldoctor.github.io/AppShowcase/birthstones-wheel/" target="_blank" rel="noopener"><span class="when">2026-10-23</span><span class="what">Birthstones Wheel</span><span class="tag">REFERENCE</span></a></li>
+            <li><a href="https://fractaldoctor.github.io/AppShowcase/phantomgram/" target="_blank" rel="noopener"><span class="when">2026-10-22</span><span class="what">PhantomGram</span><span class="tag">UTILITIES</span></a></li>
+          </ul>
+        </section>
 
-  <div class="status-bar">
-    <span class="status-item status-ok">SYS ONLINE</span>
-    <span class="status-sep">│</span>
-    <span class="status-item status-ok">CONN SECURE</span>
-    <span class="status-sep">│</span>
-    <span class="status-item status-ok">NODE: DUBLIN</span>
-    <span class="status-sep">│</span>
-    <span class="status-item status-ok">THREAT: NOMINAL</span>
-  </div>
+        <section class="panel">
+          <h2><span>LIBRARY ── BOOKS</span><span class="ref">KDP</span></h2>
+          <ul class="listing years">
+            <li><a href="https://www.amazon.co.uk/dp/B0H21WN12R" target="_blank" rel="noopener"><span class="when">2026</span><span class="what">Broken by Design</span><span class="tag">BOOK 3</span></a></li>
+            <li><a href="https://www.amazon.co.uk/dp/B0GX3B6PXC" target="_blank" rel="noopener"><span class="when">2026</span><span class="what">Return to Sender</span><span class="tag">BOOK 2</span></a></li>
+            <li><a href="https://www.amazon.co.uk/dp/B0GX1MCFCJ" target="_blank" rel="noopener"><span class="when">2026</span><span class="what">The Machine</span><span class="tag">BOOK 1</span></a></li>
+            <li><a href="https://www.amazon.co.uk/dp/B0B4TRJTFH" target="_blank" rel="noopener"><span class="when">2024</span><span class="what">Adventures In The Grand Game of Software Engineering</span><span class="tag">THE GRAND GAME</span></a></li>
+            <li><a href="https://www.amazon.co.uk/dp/B0CVS6TR62" target="_blank" rel="noopener"><span class="when">2024</span><span class="what">Thoughts On The Simulation Hypothesis</span><span class="tag">PHILOSOPHY</span></a></li>
+            <li><a href="https://www.amazon.co.uk/dp/B0D1RKY1GY" target="_blank" rel="noopener"><span class="when">2022</span><span class="what">Performance Reviews Suck!</span><span class="tag">THE GRAND GAME</span></a></li>
+          </ul>
+        </section>
+      </div>
+    </section>
 
-  <div class="fkeys">
-    <a href="https://fractaldoctor.medium.com" target="_blank" rel="noopener">F1=MEDIUM</a>
-    <a href="https://fractaldoctor.github.io/BookShowcase/" target="_blank" rel="noopener">F2=BOOKS</a>
-    <a href="https://fractaldoctor.github.io/AppShowcase/" target="_blank" rel="noopener">F3=APPS</a>
-  </div>
+  </main>
 
-  <div class="footer">
-    UPDATED: 2026-08-24 14:03 UTC
-  </div>
+  <nav class="keys">
+    <a href="https://fractaldoctor.medium.com" target="_blank" rel="noopener" data-key="1">PF1=MEDIUM</a>
+    <a href="https://fractaldoctor.github.io/BookShowcase/" data-key="2">PF2=BOOKS</a>
+    <a href="https://fractaldoctor.github.io/AppShowcase/" data-key="3">PF3=APPS</a>
+    <a href="https://music.apple.com/us/album/planetary/1161150208" target="_blank" rel="noopener" data-key="4">PF4=MUSIC</a>
+    <a href="https://fractaldoctor.medium.com/subscribe" target="_blank" rel="noopener" data-key="5">PF5=SUBSCRIBE</a>
+  </nav>
+
+  <footer class="trailer">
+    <span>FONT: 3270 (RICARDO BANFFY, BSD)</span>
+    <span>GENERATED 26.308 19:08 UTC</span>
+  </footer>
 
 </div>
-
 </body>
 </html>

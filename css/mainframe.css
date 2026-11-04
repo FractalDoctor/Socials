@@ -1,0 +1,438 @@
+/*
+ * mainframe.css
+ * The one stylesheet for fractaldoctor.com, AppShowcase and BookShowcase.
+ *
+ * The generators write plain structural markup and nothing visual.
+ * Every colour, size and layout decision lives here, so a restyle is
+ * this file and nothing else.
+ *
+ * 3270 font by Ricardo Banffy and contributors, BSD licence, see fonts/LICENSE.txt
+ */
+
+@font-face {
+  font-family: '3270';
+  src: url('../fonts/3270-Regular.woff') format('woff');
+  font-display: block;
+}
+
+@font-face {
+  font-family: '3270 Semi';
+  src: url('../fonts/3270SemiCondensed-Regular.woff') format('woff');
+  font-display: block;
+}
+
+/* 3270 base colours, green default, white intensified,
+   turquoise and blue for protected fields, yellow, red, pink */
+:root {
+  --bg:        #050805;
+  --panel:     #0a100a;
+  --green:     #3cff5a;
+  --green-dim: #2a9a3a;
+  --white:     #f2f2e8;
+  --turq:      #40e0d0;
+  --blue:      #6aa8ff;
+  --yellow:    #ffe14a;
+  --red:       #ff5a4a;
+  --pink:      #ff7ad9;
+  --rule:      #1d3d22;
+  --glow:      0 0 6px rgba(60,255,90,0.35);
+  --accent:    var(--green);
+  --font:      '3270', 'SF Mono', Menlo, monospace;
+  --font-semi: '3270 Semi', '3270', 'SF Mono', Menlo, monospace;
+}
+
+/* ── Group accents, one 3270 colour per catalogue group ── */
+[data-group="phosphor"]      { --accent: var(--green); }
+[data-group="aviation"]      { --accent: var(--blue); }
+[data-group="weather"]       { --accent: var(--turq); }
+[data-group="orbital"]       { --accent: var(--white); }
+[data-group="environmental"] { --accent: var(--turq); }
+[data-group="astronomy"]     { --accent: var(--white); }
+[data-group="travel"]        { --accent: var(--green); }
+[data-group="renewable"]     { --accent: var(--yellow); }
+[data-group="energy"]        { --accent: var(--yellow); }
+[data-group="datum"]         { --accent: var(--yellow); }
+[data-group="nacht"]         { --accent: var(--blue); }
+[data-group="esoteric"]      { --accent: var(--pink); }
+[data-group="grandgame"]     { --accent: var(--red); }
+[data-group="rpg"]           { --accent: var(--red); }
+[data-group="general"]       { --accent: var(--white); }
+[data-group="macos"]         { --accent: var(--turq); }
+[data-group="bundle"]        { --accent: var(--pink); }
+[data-group="series"]        { --accent: var(--yellow); }
+[data-group="philosophy"]    { --accent: var(--pink); }
+[data-group="work"]          { --accent: var(--red); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  color: var(--green);
+  font-family: var(--font);
+  font-size: 19px;
+  line-height: 1.35;
+  min-height: 100vh;
+  text-shadow: var(--glow);
+}
+
+/* Static scanlines, faint, nothing moves */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.18) 2px 3px);
+  pointer-events: none;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.screen {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 24px 12px;
+}
+
+.narrow .screen { max-width: 860px; }
+
+/* ── ISPF title line ── */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--blue);
+  text-shadow: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.masthead .title {
+  font-weight: normal;
+  font-size: 1em;
+  color: var(--white);
+  text-shadow: var(--glow);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Command line and message line ── */
+.command {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 4px 0 2px;
+}
+
+.command label { color: var(--turq); text-shadow: none; white-space: nowrap; }
+
+.command input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--green-dim);
+  border-radius: 0;
+  color: var(--white);
+  font: inherit;
+  text-transform: uppercase;
+  caret-color: var(--green);
+  outline: none;
+}
+
+.command input:focus { border-bottom-color: var(--green); }
+
+.command .scroll { color: var(--turq); text-shadow: none; white-space: nowrap; }
+
+.message {
+  min-height: 1.35em;
+  color: var(--yellow);
+  margin-bottom: 14px;
+}
+
+/* ── Panels ── */
+.panel {
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  padding: 12px 14px;
+}
+
+.panel + .panel { margin-top: 18px; }
+
+.panel h2 {
+  font-weight: normal;
+  font-size: 1em;
+  color: var(--turq);
+  text-shadow: none;
+  border-bottom: 1px dashed var(--rule);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.panel h2 .ref { color: var(--blue); }
+
+.panel .intro {
+  font-family: var(--font-semi);
+  color: var(--green-dim);
+  margin-bottom: 10px;
+}
+
+.panel .intro a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Home console layout ── */
+.console {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.operator .name {
+  font-weight: normal;
+  color: var(--white);
+  font-size: 1.5em;
+  letter-spacing: 0.06em;
+}
+
+.operator .handle { color: var(--green-dim); margin-bottom: 10px; }
+.operator .bio { margin-bottom: 4px; }
+.operator .bio span { display: block; }
+.operator .bio em { font-style: normal; color: var(--yellow); }
+
+dl.stats {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 12px;
+  row-gap: 2px;
+}
+
+dl.stats dt { color: var(--turq); text-shadow: none; }
+dl.stats dd { color: var(--white); text-align: right; }
+dl.stats dd.ok { color: var(--green); }
+
+/* ── Job queue, a list laid out as SDSF columns ── */
+ol.queue { list-style: none; }
+
+ol.queue li > a,
+ol.queue li.head {
+  display: grid;
+  grid-template-columns: 2ch 10ch 3ch 10ch 1fr;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+ol.queue li.head { color: var(--turq); text-shadow: none; padding-top: 0; }
+ol.queue li > a::before { content: '_'; color: var(--green-dim); }
+ol.queue li.head::before { content: ''; }
+ol.queue .job    { color: var(--white); }
+ol.queue .class  { color: var(--pink); }
+ol.queue .status { color: var(--green); }
+ol.queue .status.hold { color: var(--yellow); }
+ol.queue .desc   { color: var(--green); }
+
+ol.queue li > a:hover,
+ol.queue li > a:focus-visible { background: rgba(60,255,90,0.08); outline: none; }
+ol.queue li > a:hover::before,
+ol.queue li > a:focus-visible::before { content: 'S'; color: var(--white); }
+
+/* ── Listings, dated one-line entries ── */
+.listings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.listings .panel + .panel { margin-top: 0; }
+.listings .wide { grid-column: 1 / -1; }
+
+ul.listing { list-style: none; font-family: var(--font-semi); }
+
+ul.listing li > a {
+  display: grid;
+  grid-template-columns: 11ch 1fr auto;
+  gap: 12px;
+  padding: 3px 0;
+}
+
+ul.listing.years li > a { grid-template-columns: 5ch 1fr auto; }
+
+ul.listing .when { color: var(--blue); text-shadow: none; }
+ul.listing .what { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+ul.listing .tag  { color: var(--green-dim); text-shadow: none; white-space: nowrap; }
+ul.listing li > a:hover .what { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Catalogue groups, collapsible ── */
+details.group {
+  border: 1px solid var(--rule);
+  background: var(--panel);
+  margin-bottom: 8px;
+}
+
+details.group > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 8px 14px;
+  color: var(--accent);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+details.group > summary::-webkit-details-marker { display: none; }
+details.group > summary::before { content: '+ '; color: var(--green-dim); }
+details.group[open] > summary::before { content: '- '; }
+details.group > summary .label { flex: 1; }
+details.group > summary .count { color: var(--blue); text-shadow: none; }
+details.group > summary:hover { background: rgba(60,255,90,0.06); }
+details.group[open] > summary { border-bottom: 1px dashed var(--rule); }
+
+details.group > .intro,
+details.group > .sublabel,
+details.group > ul.catalogue { margin: 0 14px; }
+details.group > .intro { margin-top: 10px; font-family: var(--font-semi); color: var(--green-dim); }
+details.group > .intro a { color: var(--green); text-decoration: underline; text-underline-offset: 3px; }
+details.group > ul.catalogue:last-child { margin-bottom: 8px; }
+
+.sublabel {
+  font-weight: normal;
+  font-size: 1em;
+  color: var(--turq);
+  text-shadow: none;
+  margin-top: 10px;
+}
+
+/* ── Catalogue entries ── */
+ul.catalogue { list-style: none; }
+
+ul.catalogue li + li { border-top: 1px dotted var(--rule); }
+
+ul.catalogue li > a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 16px;
+  padding: 8px 0;
+}
+
+ul.catalogue .name { color: var(--accent); }
+ul.catalogue .tag  { color: var(--blue); text-shadow: none; white-space: nowrap; }
+ul.catalogue .desc {
+  grid-column: 1 / -1;
+  font-family: var(--font-semi);
+  color: var(--green-dim);
+}
+
+ul.catalogue li > a:hover .name,
+ul.catalogue li > a:focus-visible .name { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
+ul.catalogue li > a:hover .desc { color: var(--green); }
+
+/* ── Books ── */
+article.book {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 18px;
+  padding: 12px 0;
+}
+
+article.book + article.book { border-top: 1px dotted var(--rule); }
+
+article.book .title {
+  font-weight: normal;
+  font-size: 1.15em;
+  color: var(--accent);
+}
+
+article.book .subtitle { color: var(--white); margin-bottom: 4px; }
+article.book .meta { color: var(--blue); text-shadow: none; margin-bottom: 8px; }
+article.book .meta span + span::before { content: ' · '; color: var(--rule); }
+article.book .desc { font-family: var(--font-semi); color: var(--green); margin-bottom: 10px; }
+article.book .cover img { width: 140px; height: auto; display: block; border: 1px solid var(--rule); }
+
+/* ── Links that act, PF style ── */
+.actions { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+
+.actions a,
+a.action {
+  color: var(--turq);
+  text-shadow: none;
+}
+
+.actions a::before,
+a.action::before { content: '▸ '; color: var(--green-dim); }
+
+.actions a:hover,
+a.action:hover { color: var(--white); text-shadow: var(--glow); }
+
+/* ── Product page ── */
+.crumbs { color: var(--green-dim); margin-bottom: 14px; }
+.crumbs a { color: var(--turq); text-shadow: none; }
+.crumbs a:hover { color: var(--white); }
+
+.product h1 {
+  font-weight: normal;
+  font-size: 1.6em;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+}
+
+.product .tag { color: var(--blue); text-shadow: none; margin-bottom: 12px; }
+.product .summary { color: var(--white); margin-bottom: 12px; }
+.product .detail { font-family: var(--font-semi); color: var(--green); margin-bottom: 14px; }
+
+blockquote.review {
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 14px;
+  margin: 0 0 14px;
+  font-family: var(--font-semi);
+}
+
+blockquote.review .stars { color: var(--yellow); display: block; letter-spacing: 0.2em; }
+blockquote.review cite { display: block; font-style: normal; color: var(--blue); text-shadow: none; margin-top: 4px; }
+
+.product a.action { display: inline-block; font-size: 1.1em; margin-bottom: 4px; }
+
+/* ── Notice line, under a catalogue ── */
+.notice { color: var(--yellow); margin-top: 14px; }
+
+/* ── PF key bar ── */
+nav.keys {
+  margin-top: 16px;
+  border-top: 1px solid var(--rule);
+  padding-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  color: var(--turq);
+  text-shadow: none;
+}
+
+nav.keys a:hover { color: var(--white); text-shadow: var(--glow); }
+
+.trailer {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--green-dim);
+  text-shadow: none;
+  font-size: 0.85em;
+}
+
+/* ── Narrow screens ── */
+@media (max-width: 860px) {
+  body { font-size: 17px; }
+  .screen { padding: 14px 14px 10px; }
+  .console, .listings { grid-template-columns: 1fr; }
+  .masthead .system, .masthead .position { display: none; }
+  .command .scroll { display: none; }
+  ol.queue li > a, ol.queue li.head { grid-template-columns: 2ch 10ch 1fr; }
+  ol.queue .class, ol.queue .desc { display: none; }
+  ul.listing li > a, ul.listing.years li > a { grid-template-columns: 1fr; gap: 0; padding: 5px 0; }
+  ul.listing .what { white-space: normal; }
+  ul.catalogue li > a { grid-template-columns: 1fr; }
+  article.book { grid-template-columns: 1fr 90px; gap: 12px; }
+  article.book .cover img { width: 90px; }
+  .trailer { flex-direction: column; }
+}
