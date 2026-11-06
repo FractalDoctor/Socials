@@ -237,6 +237,9 @@ ol.queue li > a:focus-visible { background: rgba(60,255,90,0.08); outline: none;
 ol.queue li > a:hover::before,
 ol.queue li > a:focus-visible::before { content: 'S'; color: var(--white); }
 
+/* ── Portrait, the teletext operator ── */
+.portrait img { display: block; width: 100%; height: auto; }
+
 /* ── Listings, dated entries, one full-width panel each ── */
 .listings {
   display: grid;
