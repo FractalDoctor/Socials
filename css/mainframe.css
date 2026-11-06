@@ -237,10 +237,10 @@ ol.queue li > a:focus-visible { background: rgba(60,255,90,0.08); outline: none;
 ol.queue li > a:hover::before,
 ol.queue li > a:focus-visible::before { content: 'S'; color: var(--white); }
 
-/* ── Listings, dated one-line entries ── */
+/* ── Listings, dated entries, one full-width panel each ── */
 .listings {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 18px;
   margin-top: 18px;
 }
@@ -260,7 +260,7 @@ ul.listing li > a {
 ul.listing.years li > a { grid-template-columns: 5ch 1fr auto; }
 
 ul.listing .when { color: var(--blue); text-shadow: none; }
-ul.listing .what { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+ul.listing .what { overflow-wrap: anywhere; }
 ul.listing .tag  { color: var(--green-dim); text-shadow: none; white-space: nowrap; }
 ul.listing li > a:hover .what { color: var(--white); text-decoration: underline; text-underline-offset: 3px; }
 
